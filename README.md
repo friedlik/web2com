@@ -6,4 +6,4 @@ The examples shows how to read the hot water temperature.
 
 ![web2com example flow](https://github.com/friedlik/web2com/blob/main/web2com.png)
 
-The ID of the parameter to read from the web2com must be adapate in the function block "Get oid value XML" marked with oid in line 8.
+The ID of the parameter to be read from the web2com must be adapated in the function block "Get oid value XML" marked with oid in line 8.
