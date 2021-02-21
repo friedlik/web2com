@@ -26,7 +26,7 @@
         "method": "POST",
         "ret": "txt",
         "paytoqs": "body",
-        "url": "http://192.168.178.200:51080",
+        "url": "http://192.168.178.xxx",
         "tls": "",
         "persist": false,
         "proxy": "",
