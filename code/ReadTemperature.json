@@ -1,24 +1,5 @@
 [
     {
-        "id": "71b4d04d.fa88a",
-        "type": "inject",
-        "z": "8a47c0c2.a53a6",
-        "name": "Get Data",
-        "props": [],
-        "repeat": "60",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "x": 130,
-        "y": 300,
-        "wires": [
-            [
-                "7b7b467f.1cf738"
-            ]
-        ]
-    },
-    {
         "id": "e6949b65.6abbd8",
         "type": "http request",
         "z": "8a47c0c2.a53a6",
@@ -31,8 +12,8 @@
         "persist": false,
         "proxy": "",
         "authType": "basic",
-        "x": 570,
-        "y": 300,
+        "x": 590,
+        "y": 400,
         "wires": [
             [
                 "ed7973f0.3372c"
@@ -48,10 +29,10 @@
         "fieldType": "msg",
         "format": "html",
         "syntax": "plain",
-        "template": "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\"\n  xmlns:SOAP-ENC=\"http://schemas.xmlsoap.org/soap/encoding/\"\n  xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n  xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\n  xmlns:ns=\"http://ws01.lom.ch/soap/\">\n  <SOAP-ENV:Body>\n    <ns:getDpRequest>\n      <ref><oid>/1/2/7/121/1</oid></ref>\n      <startIndex>0</startIndex>\n      <count>1</count>\n    </ns:getDpRequest>  \n  </SOAP-ENV:Body>\n</SOAP-ENV:Envelope>",
+        "template": "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\"\n  xmlns:SOAP-ENC=\"http://schemas.xmlsoap.org/soap/encoding/\"\n  xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n  xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\n  xmlns:ns=\"http://ws01.lom.ch/soap/\">\n  <SOAP-ENV:Body>\n    <ns:getDpRequest>\n      <ref><oid>/1/2/7/121/1</oid></ref>      \n      <startIndex>0</startIndex>\n      <count>1</count>\n    </ns:getDpRequest>  \n  </SOAP-ENV:Body>\n</SOAP-ENV:Envelope>",
         "output": "str",
-        "x": 350,
-        "y": 300,
+        "x": 370,
+        "y": 400,
         "wires": [
             [
                 "e6949b65.6abbd8"
@@ -66,8 +47,8 @@
         "property": "payload",
         "attr": "",
         "chr": "",
-        "x": 750,
-        "y": 300,
+        "x": 770,
+        "y": 400,
         "wires": [
             [
                 "c282b89f.be9b08"
@@ -79,19 +60,29 @@
         "type": "function",
         "z": "8a47c0c2.a53a6",
         "name": "Get oid name & value",
-        "func": "// Get oid value\nvar name = msg.payload[\"SOAP-ENV:Envelope\"][\"SOAP-ENV:Body\"][0][\"ns:getDpResponse\"][0].ref[0].oid[0];\nvar waterTemperature = parseFloat(msg.payload[\"SOAP-ENV:Envelope\"][\"SOAP-ENV:Body\"][0][\"ns:getDpResponse\"][0].dpCfg[0].value[0]);\n\n// Compose payload\nmsg.measurement = \"WaterTemperature\";\n\nmsg.payload = {\n    value:waterTemperature\n};\nreturn msg;",
+        "func": "// Get oid value\nvar name = msg.payload[\"SOAP-ENV:Envelope\"][\"SOAP-ENV:Body\"][0][\"ns:getDpResponse\"][0].ref[0].oid[0];\nvar temperature = Number.parseFloat(msg.payload[\"SOAP-ENV:Envelope\"][\"SOAP-ENV:Body\"][0][\"ns:getDpResponse\"][0].dpCfg[0].value[0]);\n\nif (Number.isNaN(temperature) == false)\n{\n    // Compose payload\n    msg.measurement = \"WaterTemperature\";\n    \n    msg.payload = {\n        value:temperature\n    };\n    return msg;    \n}",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 940,
-        "y": 300,
+        "x": 960,
+        "y": 400,
         "wires": [
             [
                 "84d539d2.fd51f8",
                 "adcb75c4.7ccb08"
             ]
         ]
+    },
+    {
+        "id": "fec82df.fe978d",
+        "type": "comment",
+        "z": "8a47c0c2.a53a6",
+        "name": "web2com access",
+        "info": "",
+        "x": 360,
+        "y": 360,
+        "wires": []
     },
     {
         "id": "84d539d2.fd51f8",
@@ -105,7 +96,7 @@
         "gtype": "gage",
         "title": "Warmwasser Temperatur",
         "label": "°C",
-        "format": "{{msg.payload.value}}",
+        "format": "{{msg.payload.value | number:1}}",
         "min": 0,
         "max": "70",
         "colors": [
@@ -115,8 +106,8 @@
         ],
         "seg1": "",
         "seg2": "",
-        "x": 1250,
-        "y": 360,
+        "x": 1310,
+        "y": 440,
         "wires": []
     },
     {
@@ -133,8 +124,8 @@
         "retentionPolicyV18Flux": "",
         "org": "organisation",
         "bucket": "bucket",
-        "x": 1290,
-        "y": 300,
+        "x": 1270,
+        "y": 400,
         "wires": []
     },
     {
@@ -158,7 +149,7 @@
         "usetls": false,
         "tls": "",
         "influxdbVersion": "1.8-flux",
-        "url": "http://192.168.178.47:8086",
+        "url": "http://192.168.178.xx:8086",
         "rejectUnauthorized": false
     },
     {
