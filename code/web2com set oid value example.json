@@ -1,0 +1,356 @@
+[
+    {
+        "id": "df50ee95.a666c",
+        "type": "template",
+        "z": "8be32e4b.e5248",
+        "name": "Set oid value XML",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "plain",
+        "template": "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\"\n  xmlns:SOAP-ENC=\"http://schemas.xmlsoap.org/soap/encoding/\"\n  xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n  xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\n  xmlns:ns=\"http://ws01.lom.ch/soap/\">\n  <SOAP-ENV:Body>\n    <ns:writeDpRequest>\n      <ref>\n        <oid>/1/2/7/107/0</oid>\n      </ref>  \n      <dp>\n        <index>0</index>\n        <value>2</value>\n        <timestamp>0</timestamp>\n      </dp>\n    </ns:writeDpRequest>  \n  </SOAP-ENV:Body>\n</SOAP-ENV:Envelope>",
+        "output": "str",
+        "x": 570,
+        "y": 100,
+        "wires": [
+            [
+                "73d32af9.3204c4",
+                "f2250c4b.f6949"
+            ]
+        ]
+    },
+    {
+        "id": "73d32af9.3204c4",
+        "type": "http request",
+        "z": "8be32e4b.e5248",
+        "name": "web2com request",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "body",
+        "url": "http://192.168.178.xx:yy",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "basic",
+        "x": 830,
+        "y": 180,
+        "wires": [
+            [
+                "eef6e713.5a6018"
+            ]
+        ]
+    },
+    {
+        "id": "39e47e71.8b71b2",
+        "type": "comment",
+        "z": "8be32e4b.e5248",
+        "name": "web2com control hot water heating operating mode",
+        "info": "",
+        "x": 210,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "9c32a6a0.791888",
+        "type": "ui_button",
+        "z": "8be32e4b.e5248",
+        "name": "Set normal temperature mode",
+        "group": "654943d5.8e551c",
+        "order": 6,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Normal Temperatur",
+        "tooltip": "Ladung sofort abhängig  von der Warmwasser Temperatur",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "NormalTemperatur",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 170,
+        "y": 100,
+        "wires": [
+            [
+                "e542d65d.c75b68"
+            ]
+        ]
+    },
+    {
+        "id": "92446b32.589b18",
+        "type": "ui_button",
+        "z": "8be32e4b.e5248",
+        "name": "Set automatic mode",
+        "group": "654943d5.8e551c",
+        "order": 7,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Automatik",
+        "tooltip": "Ladung nach Zeitprogramm",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "Automatik",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 140,
+        "y": 180,
+        "wires": [
+            [
+                "e542d65d.c75b68"
+            ]
+        ]
+    },
+    {
+        "id": "5889dd7.440d324",
+        "type": "template",
+        "z": "8be32e4b.e5248",
+        "name": "Set oid value XML",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "plain",
+        "template": "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\"\n  xmlns:SOAP-ENC=\"http://schemas.xmlsoap.org/soap/encoding/\"\n  xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n  xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\n  xmlns:ns=\"http://ws01.lom.ch/soap/\">\n  <SOAP-ENV:Body>\n    <ns:writeDpRequest>\n      <ref>\n        <oid>/1/2/7/107/0</oid>\n      </ref>  \n      <dp>\n        <index>0</index>\n        <value>1</value>\n        <timestamp>0</timestamp>\n      </dp>\n    </ns:writeDpRequest>  \n  </SOAP-ENV:Body>\n</SOAP-ENV:Envelope>",
+        "output": "str",
+        "x": 570,
+        "y": 180,
+        "wires": [
+            [
+                "73d32af9.3204c4",
+                "f2250c4b.f6949"
+            ]
+        ]
+    },
+    {
+        "id": "158768f0.041c07",
+        "type": "ui_text",
+        "z": "8be32e4b.e5248",
+        "group": "654943d5.8e551c",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Status",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "x": 1370,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "eef6e713.5a6018",
+        "type": "switch",
+        "z": "8be32e4b.e5248",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "cont",
+                "v": "(1) EBusRoot/(2) 513201421/(7) WARMWASSERKREIS/(107) /(0) 05:50",
+                "vt": "str"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 1,
+        "x": 1010,
+        "y": 180,
+        "wires": [
+            [
+                "35123303.1b84bc"
+            ]
+        ]
+    },
+    {
+        "id": "35123303.1b84bc",
+        "type": "template",
+        "z": "8be32e4b.e5248",
+        "name": "Get oid value XML",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "plain",
+        "template": "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\"\n  xmlns:SOAP-ENC=\"http://schemas.xmlsoap.org/soap/encoding/\"\n  xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n  xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\n  xmlns:ns=\"http://ws01.lom.ch/soap/\">\n  <SOAP-ENV:Body>\n    <ns:getDpRequest>\n      <ref>\n        <oid>/1/2/7/107/0</oid>\n      </ref>      \n      <startIndex>0</startIndex>\n      <count>10</count>\n    </ns:getDpRequest>  \n  </SOAP-ENV:Body>\n</SOAP-ENV:Envelope>",
+        "output": "str",
+        "x": 430,
+        "y": 300,
+        "wires": [
+            [
+                "ca077784.847018"
+            ]
+        ]
+    },
+    {
+        "id": "ca077784.847018",
+        "type": "http request",
+        "z": "8be32e4b.e5248",
+        "name": "web2com request",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "body",
+        "url": "http://192.168.178.xx:yy",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "basic",
+        "x": 650,
+        "y": 300,
+        "wires": [
+            [
+                "d8f97167.c6249"
+            ]
+        ]
+    },
+    {
+        "id": "81fcaafe.5126d8",
+        "type": "xml",
+        "z": "8be32e4b.e5248",
+        "name": "",
+        "property": "payload",
+        "attr": "",
+        "chr": "",
+        "x": 970,
+        "y": 300,
+        "wires": [
+            [
+                "3001eef8.c42ab2"
+            ]
+        ]
+    },
+    {
+        "id": "3001eef8.c42ab2",
+        "type": "function",
+        "z": "8be32e4b.e5248",
+        "name": "Get oid name & value",
+        "func": "// Get oid value\nvar name = msg.payload[\"SOAP-ENV:Envelope\"][\"SOAP-ENV:Body\"][0][\"ns:getDpResponse\"][0].ref[0].oid[0];\nvar status = Number.parseFloat(msg.payload[\"SOAP-ENV:Envelope\"][\"SOAP-ENV:Body\"][0][\"ns:getDpResponse\"][0].dpCfg[0].value[0]);\n\nif (Number.isNaN(status) == false)\n{\n    // Compose payload\n    msg.measurement = \"Warmwasser Status\";\n    // Evaluate status string\n    if (status == 0)\n    {\n         msg.payload = \"Keine Ladung\";\n    }\n    else if (status == 1)\n    {\n        msg.payload = \"Automatik\";\n    }\n    else if (status == 2)\n    {\n         msg.payload = \"Normal Temperatur\";\n    }\n    else if (status == 3)\n    {\n        msg.payload = \"Nach Heizbetrieb\";\n    }\n    else\n    {\n        msg.payload = \"Unbekannt\";\n    }\n    return msg;    \n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 1160,
+        "y": 300,
+        "wires": [
+            [
+                "158768f0.041c07"
+            ]
+        ]
+    },
+    {
+        "id": "232cef8f.d006d",
+        "type": "inject",
+        "z": "8be32e4b.e5248",
+        "name": "Manual Update",
+        "props": [],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 140,
+        "y": 300,
+        "wires": [
+            [
+                "35123303.1b84bc"
+            ]
+        ]
+    },
+    {
+        "id": "f2250c4b.f6949",
+        "type": "function",
+        "z": "8be32e4b.e5248",
+        "name": "Updating...",
+        "func": "msg.payload = \"Aktualisierung..\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 810,
+        "y": 100,
+        "wires": [
+            [
+                "158768f0.041c07"
+            ]
+        ]
+    },
+    {
+        "id": "d8f97167.c6249",
+        "type": "switch",
+        "z": "8be32e4b.e5248",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "cont",
+                "v": "(1) EBusRoot/(2) 513201421/(7) WARMWASSERKREIS/(107) /(0) 05:50",
+                "vt": "str"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 1,
+        "x": 830,
+        "y": 300,
+        "wires": [
+            [
+                "81fcaafe.5126d8"
+            ]
+        ]
+    },
+    {
+        "id": "e542d65d.c75b68",
+        "type": "switch",
+        "z": "8be32e4b.e5248",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "NormalTemperatur",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "Automatik",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 390,
+        "y": 140,
+        "wires": [
+            [
+                "df50ee95.a666c"
+            ],
+            [
+                "5889dd7.440d324"
+            ]
+        ]
+    },
+    {
+        "id": "654943d5.8e551c",
+        "type": "ui_group",
+        "name": "Betriebswahl Warmwasser",
+        "tab": "af8bd5a3.0f1488",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": true
+    },
+    {
+        "id": "af8bd5a3.0f1488",
+        "type": "ui_tab",
+        "name": "Controlling",
+        "icon": "dashboard",
+        "order": 2,
+        "disabled": false,
+        "hidden": false
+    }
+]
