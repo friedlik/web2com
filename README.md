@@ -14,4 +14,4 @@ With this flow it is possible to set data via web2com for the heat pump.
 The example shows how to set the hot water heating operating mode.
 
 
-![web2com set OID value example flow](https://github.com/friedlik/web2com/blob/main/web2comSetOIDValue.png)
+![web2com example flow](https://github.com/friedlik/web2com/blob/main/web2comSetOIDValue.png)
