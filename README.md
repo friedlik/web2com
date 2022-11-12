@@ -4,7 +4,7 @@
 With this flow it is possible to get data via web2com from the heat pump.
 The example shows how to read the hot water temperature.
 
-![web2com example flow get OID value](https://github.com/friedlik/web2com/blob/main/web2com.png)
+![web2com example flow get OID value](web2com.png)
 
 The ID of the parameter to be read from the web2com must be adapated in the function block "Get oid value XML" marked with oid in line 8.
 
